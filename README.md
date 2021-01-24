@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>캡쳐박스<img src="https://media.giphy.com/media/P7Fo0Kd01O0DHNNEh4/giphy.gif" width="50px"></h1>
+  <h1>Labelary<img src="https://media.giphy.com/media/P7Fo0Kd01O0DHNNEh4/giphy.gif" width="50px"></h1>
   
   <h3>NEXTERS 18th<br/>Full-Stack Team <br/>Back-End</h3>
   
@@ -11,3 +11,5 @@
 </div>
 
 ---
+
+@Copyright [NEXTERS 18th 박영준](https://github.com/jun108059)
