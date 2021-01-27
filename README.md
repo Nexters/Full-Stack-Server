@@ -10,7 +10,13 @@
   스마트폰 스크린샷을 관리해주는 App 서비스📸✨
 </div>
 
-## 📗 ERD
+---
+
+## 📘 `Swagger`
+
+https://app.swaggerhub.com/apis/jun108059/Labelary/1.0.0#/label/get_label
+
+## 📗 `ERD`
 
 https://www.erdcloud.com/d/wGdksbF4YB8qjWDQa
 
