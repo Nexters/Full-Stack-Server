@@ -10,6 +10,10 @@
   스마트폰 스크린샷을 관리해주는 App 서비스📸✨
 </div>
 
+## 📗 ERD
+
+https://www.erdcloud.com/d/wGdksbF4YB8qjWDQa
+
 ---
 
 @Copyright [NEXTERS 18th 박영준](https://github.com/jun108059)
