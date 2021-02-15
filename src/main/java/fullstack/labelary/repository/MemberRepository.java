@@ -56,4 +56,16 @@ public class MemberRepository {
                 .getResultList();
     }
 
+    /**
+     * 이메일로 회원 조회
+     *
+     * @param email 회원 이메일
+     * @return Member List
+     */
+    public List<Member> findByEmail(String email) {
+        return em.createQuery("select m from Member m where m.memEmail = :email", Member.class)
+                .setParameter("email", email)
+                .getResultList();
+    }
+
 }
