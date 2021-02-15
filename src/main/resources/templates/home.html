@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+    <title>Hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div class="container">
+
+    <div th:replace="fragments/bodyHeader :: bodyHeader"></div>
+
+    <div class="jumbotron">
+        <h1>Labelary 관리자</h1>
+        <p class="lead">회원 기능</p>
+        <p>
+            <a class="btn btn-lg btn-secondary" href="/members/new">회원 가입</a>
+            <a class="btn btn-lg btn-secondary" href="/members">회원 목록</a>
+        </p>
+        <p class="lead">라벨 기능</p>
+        <p>
+            <a class="btn btn-lg btn-dark" href="/labels/new">라벨 등록</a>
+            <a class="btn btn-lg btn-dark" href="/labels">라벨 목록</a>
+        </p>
+        <p class="lead">사진 기능</p>
+        <p>
+            <a class="btn btn-lg btn-info" href="/pictures/new">사진 업로드</a>
+            <a class="btn btn-lg btn-info" href="/pictures">사진 목록</a>
+        </p>
+    </div>
+
+    <div th:replace="fragments/footer :: footer"></div>
+
+</div> <!-- /container -->
+</body>
+</html>
