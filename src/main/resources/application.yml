@@ -1,12 +1,12 @@
 spring:
   datasource:
-    url: jdbc:h2:tcp://localhost/~/labelarydb
+    url: jdbc:h2:tcp://localhost/~/labelary
     username: sa
     password:
     driver-class-name: org.h2.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     properties:
       hibernate:
         # show_sql: true # System.out 으로 출력
@@ -16,4 +16,4 @@ spring:
     suffix: .html
 logging.level:
   org.hibernate.SQL: debug # Log 남김
-# org.hibernate.type: trace
+  org.hibernate.type: trace
