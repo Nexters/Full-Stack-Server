@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"></head>
+<style>
+    .fieldError {
+        border-color: #bd2130;
+    }
+</style>
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"></div>
+    <form role="form" action="/members/new" th:object="${memberForm}"
+          method="post">
+        <div class="form-group">
+            <label th:for="memName">이름</label>
+            <input type="text" th:field="*{memName}" class="form-control"
+                   placeholder="이름을 입력하세요"
+                   th:class="${#fields.hasErrors('name')}? 'form-control fieldError' : 'form-control'">
+            <p th:if="${#fields.hasErrors('name')}"
+               th:errors="*{memName}">Incorrect date</p>
+        </div>
+        <div class="form-group">
+            <label th:for="memEmail">이메일</label>
+            <label>
+                <input type="text" th:field="*{memEmail}" class="form-control"
+                       placeholder="이메일을 입력하세요"
+                       th:class="${#fields.hasErrors('memEmail')}? 'form-control fieldError' : 'form-control'">
+            </label>
+            <p th:if="${#fields.hasErrors('memEmail')}"
+               th:errors="*{memEmail}">Incorrect date</p>
+        </div>
+        <div class="form-group">
+            <label th:for>비밀번호</label>
+            <label>
+                <input type="password" th:field="*{memPassword}" class="form-control"
+                       placeholder="비밀번호를 입력하세요">
+            </label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br/>
+    <div th:replace="fragments/footer :: footer"></div>
+</div> <!-- /container -->
+</body>
+</html>
