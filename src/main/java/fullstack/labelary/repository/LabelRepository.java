@@ -52,11 +52,25 @@ public class LabelRepository {
     }
 
     /**
+     * 라벨 이름 매칭 조회하기
+     *
+     * @param title 조회할 라벨 이름
+     * @return Label Object
+     */
+    public List<Label> findByTitle(String title) {
+
+        return em.createQuery("select l from Label l where l.labelTitle = :title", Label.class)
+                .setParameter("title", title)
+                .getResultList();
+    }
+
+
+    /**
      * idx 일치 라벨 삭제
      *
      * @param idx 삭제할 라벨 idx
      */
-    public void delete(Long idx) {
+    public void deleteLabel(Long idx) {
         Label toDeleteLabel = em.find(Label.class, idx);
         em.remove(toDeleteLabel);
     }
