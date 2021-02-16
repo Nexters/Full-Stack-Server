@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class LabelService {
 
@@ -18,10 +19,13 @@ public class LabelService {
      * 라벨 등록
      *
      * @param label 라벨 정보
+     * @return 등록된 Label idx
      */
     @Transactional
-    public void saveLabel(Label label) {
+    public Long saveLabel(Label label) {
+        validateDuplicateLabel(label);
         labelRepository.save(label);
+        return label.getLabelIdx();
     }
 
     /**
@@ -41,5 +45,42 @@ public class LabelService {
      */
     public Label findOne(Long labelIdx) {
         return labelRepository.findOne(labelIdx);
+    }
+
+    /**
+     * 라벨 이름 업데이트
+     *
+     * @param labelIdx 라벨 idx
+     * @param labelTitle 변경할 라벨 이름
+     */
+    @Transactional
+    public void updateLabel(Long labelIdx, String labelTitle, String labelColor) {
+        // 변경 감지 데이터 수정
+        Label label = labelRepository.findOne(labelIdx);
+        label.setLabelTitle(labelTitle);
+        label.setLabelColor(labelColor);
+    }
+
+    /**
+     * 라벨 삭제
+     *
+     * @param labelIdx 라벨 Idx
+     * @return Idx 일치 라벨 삭제 여부
+     */
+    public void deleteLabel(Long labelIdx) {
+        labelRepository.deleteLabel(labelIdx);
+    }
+
+    /**
+     * 라벨 이름 중복 검증 로직
+     *
+     * @param label 라벨 정보
+     */
+    private void validateDuplicateLabel(Label label) {
+        // EXCEPTION 처리
+        List<Label> findLabels = labelRepository.findByTitle(label.getLabelTitle());
+        if (!findLabels.isEmpty()) {
+            throw new IllegalStateException("이미 존재하는 라벨입니다.");
+        }
     }
 }
