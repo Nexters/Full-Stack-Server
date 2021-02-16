@@ -35,7 +35,7 @@ public class MemberService {
      *
      * @return member List
      */
-    private List<Member> findAllMembers() {
+    public List<Member> findAllMembers() {
         return memberRepository.findAll();
     }
 
@@ -45,8 +45,21 @@ public class MemberService {
      * @param memberIdx 회원 Idx
      * @return 회원 정보
      */
-    private Member findOneMember(Long memberIdx) {
+    public Member findOneMember(Long memberIdx) {
         return memberRepository.findOne(memberIdx);
+    }
+
+    /**
+     * 회원 이름 업데이트
+     *
+     * @param memIdx  회원 idx
+     * @param memName 변경할 이름
+     */
+    @Transactional
+    public void update(Long memIdx, String memName) {
+        // 변경 감지 데이터 수정
+        Member member = memberRepository.findOne(memIdx);
+        member.setMemName(memName);
     }
 
     /**
@@ -56,9 +69,11 @@ public class MemberService {
      */
     private void validateDuplicateMember(Member member) {
         // EXCEPTION 처리
-        List<Member> findMembers = memberRepository.findByName(member.getMemName());
+        List<Member> findMembers = memberRepository.findByEmail(member.getMemEmail());
         if (!findMembers.isEmpty()) {
             throw new IllegalStateException("이미 존재하는 회원입니다.");
         }
     }
+
+
 }
