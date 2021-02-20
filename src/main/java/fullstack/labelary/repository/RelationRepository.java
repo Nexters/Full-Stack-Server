@@ -18,9 +18,8 @@ public class RelationRepository {
      * 라벨링 생성
      *
      * @param relation 관계 엔티
-     * @return 저장된 사진 Idx
      */
-    public long save(Relation relation) {
+    public void save(Relation relation) {
         // JPA 저장되기 전까지 idx == null
         if (relation.getRelationIdx() == null){
             // 새로 생성
@@ -29,7 +28,6 @@ public class RelationRepository {
             // 이건 update 같이 동작 함
             em.merge(relation);
         }
-        return relation.getRelationIdx();
     }
 
     /**
