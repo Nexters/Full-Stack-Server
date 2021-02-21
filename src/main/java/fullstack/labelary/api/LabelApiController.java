@@ -43,7 +43,7 @@ public class LabelApiController {
         label.setLabelDetail(request.getLabelDetail());
         label.setLabelDt(LocalDateTime.now());
 
-        Long idx = LabelService.saveLabel(label);
+        Long idx = labelService.saveLabel(label);
         return new CreateLabelResponse(idx);
     }
 

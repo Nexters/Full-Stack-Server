@@ -1,6 +1,6 @@
 package fullstack.labelary.controller;
 
-import fullstack.labelary.repository.Label;
+import fullstack.labelary.domain.Label;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,8 +16,8 @@ public class LabelController {
     @PostConstruct
     public void init() {
         labelMap = new HashMap<String, Label>();
-        labelMap.put("1", new Label(1, "Title", "Detail", "0", "20210125"));
-        labelMap.put("2", new Label(2, "Title2", "Detail2", "1", "20210126"));
+//        labelMap.put("1", new Label(1, "Title", "Detail", "0", "20210125"));
+//        labelMap.put("2", new Label(2, "Title2", "Detail2", "1", "20210126"));
     }
 
     /**
