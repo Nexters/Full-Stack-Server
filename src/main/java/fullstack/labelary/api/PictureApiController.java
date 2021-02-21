@@ -28,7 +28,7 @@ public class PictureApiController {
     }
 
     /**
-     * 사진 생성 V2
+     * 사진 저장 V2
      *
      * @param request RequestBody 정보
      * @return Response Json 응답
@@ -40,7 +40,7 @@ public class PictureApiController {
         picture.setThumbnail(request.getThumbnail());
         picture.setPictureDt(LocalDateTime.now());
 
-        Long idx = PictureService.savePicture(picture);
+        Long idx = pictureService.savePicture(picture);
         return new PictureApiController.CreatePictureResponse(idx);
     }
 

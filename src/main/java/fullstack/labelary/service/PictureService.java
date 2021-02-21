@@ -22,8 +22,10 @@ public class PictureService {
      * @param picture 사진 정보
      */
     @Transactional
-    public void savePicture(Picture picture) {
+    public Long savePicture(Picture picture) {
+        // Todo 중복된 사진인지 검사하는 로직 추가할 수 있음
         pictureRepository.save(picture);
+        return picture.getPictureIdx();
     }
 
     /**
