@@ -88,6 +88,13 @@ public class MemberApiController {
         return new CreateMemberResponse(id);
     }
 
+    /**
+     * 회원 정보 수정
+     *
+     * @param idx 수정할 회원 Idx
+     * @param request 수정될 정보
+     * @return Dto 업데이트된 정보
+     */
     @PostMapping("/api/v2/members/{idx}")
     public UpdateMemberResponse updateMemberV2(@PathVariable("idx") Long idx,
                                                @RequestBody @Valid UpdateMemberRequest request){
