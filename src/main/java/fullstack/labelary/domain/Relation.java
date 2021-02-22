@@ -14,6 +14,9 @@ public class Relation {
     @Column(name = "relation_idx")
     private Long relationIdx;   // 관계 번호
     private LocalDateTime relationDt;  // 관계 생성 시간
+    private Long memIdx;
+    private Long pictureIdx;
+    private Long labelIdx;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mem_idx")
