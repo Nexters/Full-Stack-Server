@@ -73,3 +73,88 @@ public class RelationApiController {
         private Long pictureIdx;   // 사진 번호
         private Long labelIdx;     // 라벨 번호
     }
+
+    /**
+     * 라벨링 생성 V2 : DTO 사용(사진 1 : 라벨 n)
+     * Todo 앨범에서 라벨 1 : 사진 n 생성 또는 변경 로직 필요
+     *
+     * @param request RequestBody 정보
+     * @return Response Json 응답
+     */
+    @PostMapping("/api/v2/relations")
+    public CreateRelationResponse saveRelationV2(@RequestBody @Valid CreateRelationRequest request) {
+        Relation relation = new Relation();
+        // Todo 세션 유지 - 회원 번호
+        relation.setMemIdx(request.getMemIdx());
+        // 사진 번호
+        relation.setPictureIdx(request.getPictureIdx());
+        relation.setRelationDt(LocalDateTime.now());
+        for (Long labelIdx : request.getLabelIdx()) {
+            relation.setLabelIdx(labelIdx);
+            relationService.save(relation);
+        }
+        return new CreateRelationResponse(relation.getRelationIdx());
+    }
+
+    /**
+     * 라벨링 관계 요청 Dto
+     */
+    @Data
+    static class CreateRelationRequest {
+        private Long memIdx;       // 회원 번호
+        private Long pictureIdx;   // 사진 번호
+        private List<Long> labelIdx;     // 라벨 번호 list
+    }
+
+    /**
+     * 라벨링 응답 Dto
+     */
+    @Data
+    static class CreateRelationResponse {
+        private Long relationIdx;
+
+        public CreateRelationResponse(Long id) {
+            this.relationIdx = id;
+        }
+    }
+
+    /**
+     * 라벨링 정보 수정
+     *
+     * @param memIdx 수정할 라벨링 관계 회원 Idx
+     * @param request 수정될 라벨링 정보
+     * @return Dto 업데이트된 정보
+     */
+    @PostMapping("/api/v2/relations/{memIdx}")
+    public UpdateRelationResponse updateRelationV2(@PathVariable("memIdx") Long memIdx,
+                                                                   @RequestBody @Valid UpdateRelationRequest request){
+        // 커멘드
+        relationService.update(memIdx, request.getPictureIdx(), request.getLabelList());
+        // 쿼리
+        List<Relation> findRelations = relationService.findByMember(memIdx);
+        return new UpdateRelationResponse(memIdx, findRelations);
+    }
+
+    /**
+     * 라벨링 수정 : 사진에 대한 라벨만 수정
+     */
+    @Data
+    static class UpdateRelationRequest {
+        private Long pictureIdx;
+        private List<Long> labelList;
+
+    }
+
+    /**
+     * 수정 후 응답 값 Dto
+     */
+    @Data
+    @AllArgsConstructor
+    static class UpdateRelationResponse {
+        private Long memIdx;
+        private List<Relation> relations;
+    }
+
+
+
+}
