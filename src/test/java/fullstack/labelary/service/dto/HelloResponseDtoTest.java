@@ -1,5 +1,6 @@
 package fullstack.labelary.service.dto;
 
+import fullstack.labelary.dto.test.HelloResponseDto;
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 

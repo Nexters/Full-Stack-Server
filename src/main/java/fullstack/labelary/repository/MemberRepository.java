@@ -68,4 +68,15 @@ public class MemberRepository {
                 .getResultList();
     }
 
+    /**
+     * 회원 삭제
+     *
+     * @param memIdx 회원 idx
+     */
+    public void deleteMember(Long memIdx) {
+        Member member = em.find(Member.class, memIdx);
+        em.remove(member);
+    }
+
+
 }

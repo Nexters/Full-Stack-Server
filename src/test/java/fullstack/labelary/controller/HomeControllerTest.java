@@ -1,5 +1,6 @@
 package fullstack.labelary.controller;
 
+import fullstack.labelary.controller.web.AdminController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(controllers = HomeController.class)
+@WebMvcTest(controllers = AdminController.class)
 public class HomeControllerTest {
 
     // 웹 API 테스트할 때 사용

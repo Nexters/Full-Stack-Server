@@ -61,4 +61,5 @@ public class PictureRepository {
         em.remove(toDeletePicture);
     }
 
+    // 사진 즐겨찾기
 }

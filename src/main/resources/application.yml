@@ -1,19 +1,38 @@
 spring:
   datasource:
-    url: jdbc:h2:tcp://localhost/~/labelary
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    url: jdbc:mysql://db-labelary.cwn26ebdtrvp.ap-northeast-2.rds.amazonaws.com:3306/labelary?useUnicode=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: fullstack
+    password: qwer1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     properties:
       hibernate:
-        # show_sql: true # System.out 으로 출력
         format_sql: true
+        # dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    show_sql: true # System.out 으로 출력
+
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    groups-order: DESC
+    operationsSorter: method
+    disable-swagger-default-url: true
+    display-request-duration: true
+  api-docs:
+    path: /api-docs
+  show-actuator: true
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  paths-to-match:
+    - /members/**
+    - /api/**
+
 logging.level:
   org.hibernate.SQL: debug # Log 남김
   org.hibernate.type: trace

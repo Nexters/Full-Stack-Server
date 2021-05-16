@@ -1,40 +1,37 @@
 package fullstack.labelary.service;
 
 import fullstack.labelary.domain.Label;
+import fullstack.labelary.dto.label.LabelGetResponseDto;
+import fullstack.labelary.dto.label.LabelSaveRequestDto;
+import fullstack.labelary.dto.label.LabelUpdateRequestDto;
 import fullstack.labelary.repository.LabelRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
-@Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Service
 public class LabelService {
 
     private final LabelRepository labelRepository;
 
     /**
      * 라벨 등록
-     *
-     * @param label 라벨 정보
      * @return 등록된 Label idx
      */
     @Transactional
-    public Long saveLabel(Label label) {
-        validateDuplicateLabel(label);
-        labelRepository.save(label);
-        return label.getLabelIdx();
+    public Long saveLabel(LabelSaveRequestDto request) {
+        return labelRepository.save(request.toEntity()).getLabelIdx();
     }
 
     /**
      * 모든 라벨 조회
-     *
      * @return 라벨 List
      */
-    public List<Label> findLabels() {
-        return labelRepository.findAll();
+    public Page<Label> findLabels(Pageable pageable) {
+        return labelRepository.findAll(pageable);
     }
 
     /**
@@ -43,44 +40,30 @@ public class LabelService {
      * @param labelIdx 라벨 Idx
      * @return 일치하는 라벨
      */
-    public Label findOne(Long labelIdx) {
-        return labelRepository.findOne(labelIdx);
+    public LabelGetResponseDto findById(Long labelIdx) {
+        Label entity = labelRepository.findById(labelIdx)
+                .orElseThrow(() -> new IllegalArgumentException("해당 라벨이 없습니다. id = " + labelIdx));
+        return new LabelGetResponseDto(entity);
     }
 
     /**
-     * 라벨 이름 업데이트
-     *
-     * @param labelIdx 라벨 idx
-     * @param labelTitle 변경할 라벨 이름
+     * 라벨 제목, 설명, 색 업데이트
      */
     @Transactional
-    public void updateLabel(Long labelIdx, String labelTitle, String labelColor) {
-        // 변경 감지 데이터 수정
-        Label label = labelRepository.findOne(labelIdx);
-        label.setLabelTitle(labelTitle);
-        label.setLabelColor(labelColor);
+    public Long updateLabel(Long labelIdx, LabelUpdateRequestDto request) {
+        Label label = labelRepository.findById(labelIdx)
+                .orElseThrow(() -> new IllegalStateException("해당 라벨이 없습니다. id = " + labelIdx));
+        label.update(request.getLabelTitle(), request.getLabelDetail(), request.getLabelColor());
+        return labelIdx;
     }
 
     /**
      * 라벨 삭제
      *
      * @param labelIdx 라벨 Idx
-     * @return Idx 일치 라벨 삭제 여부
      */
     public void deleteLabel(Long labelIdx) {
-        labelRepository.deleteLabel(labelIdx);
+        labelRepository.deleteById(labelIdx);
     }
 
-    /**
-     * 라벨 이름 중복 검증 로직
-     *
-     * @param label 라벨 정보
-     */
-    private void validateDuplicateLabel(Label label) {
-        // EXCEPTION 처리
-        List<Label> findLabels = labelRepository.findByTitle(label.getLabelTitle());
-        if (!findLabels.isEmpty()) {
-            throw new IllegalStateException("이미 존재하는 라벨입니다.");
-        }
-    }
 }
