@@ -10,12 +10,13 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        # dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
     show_sql: true # System.out 으로 출력
-
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
+  profiles:
+    include: oauth
 
 springdoc:
   swagger-ui:
