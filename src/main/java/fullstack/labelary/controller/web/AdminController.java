@@ -36,4 +36,17 @@ public class AdminController {
 
         return "basic";
     }
+
+
+    @GetMapping("admin/login")
+    public String login() {
+        log.info("### Login Page");
+        return "login";
+    }
+
+    @GetMapping("admin/label/save")
+    public String labelSave() {
+        log.info("### Label Save");
+        return "label-save";
+    }
 }

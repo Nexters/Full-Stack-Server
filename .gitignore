@@ -194,3 +194,4 @@ gradle-app.setting
 **/build/
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,java,java-web,intellij+all,gradle,windows
+/src/main/resources/application-oauth.yml
