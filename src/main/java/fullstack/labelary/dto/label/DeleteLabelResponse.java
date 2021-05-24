@@ -1,14 +1,14 @@
 package fullstack.labelary.dto.label;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * 라벨 데이터 Response
  */
-@Data
-@AllArgsConstructor
+@Getter
+@NoArgsConstructor
 public class DeleteLabelResponse {
     private Long labelIdx;
 }
