@@ -1,15 +1,16 @@
 package fullstack.labelary.dto.label;
 
 import fullstack.labelary.domain.Label;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 
 /**
  * 라벨 데이터 Get Response
  */
-@Data
-@AllArgsConstructor
+@Getter
+@NoArgsConstructor
 public class LabelGetResponseDto {
     private Long labelIdx;
     private String labelTitle;
