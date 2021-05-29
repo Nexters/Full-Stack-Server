@@ -28,14 +28,17 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuth2UserService delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
+        // 서비스 구분 id (구글, 네이버, 카카오, 애플 등)
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
+        // 로그인 시, PK가 되는 필드 값 받아오기 (구글:"sub", 네이버 카카오 지원x)
         String userNameAttributeName = userRequest.getClientRegistration()
                 .getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
-
+        // 소셜 로그인 된 유저 정보 - 객체화
         OAuthAttributes attributes = OAuthAttributes.
                 of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
-
+        // 사용자 정보 등록 or 업데이트
         Member member = saveOrUpdate(attributes);
+        // 세션에 사용자 정보 등록
         httpSession.setAttribute("user", new SessionUser(member));
 
         return new DefaultOAuth2User(
@@ -45,10 +48,11 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     }
 
     private Member saveOrUpdate(OAuthAttributes attributes) {
+        // 중복 체크하여 저장 혹은 업데이트
         Member user = memberRepository.findByMemEmail(attributes.getEmail())
                 .map(entity -> entity.update(attributes.getName(),attributes.getPicture()))
                 .orElse(attributes.toEntity());
-
+        // DB에 저장 후 사용자 객체 반환
         return memberRepository.save(user);
     }
 }
