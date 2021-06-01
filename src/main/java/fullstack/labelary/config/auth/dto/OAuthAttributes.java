@@ -26,6 +26,7 @@ public class OAuthAttributes {
         this.picture = picture;
     }
 
+    // OAuth 전달 받은 값 구글 규격으로 매핑
     public static OAuthAttributes of(String registrationId,
                                      String userNameAttributeName,
                                      Map<String, Object> attributes) {
@@ -43,7 +44,7 @@ public class OAuthAttributes {
                 .build();
     }
 
-
+    // 새로운 회원인 경우 Entity 생성
     public Member toEntity() {
         return Member.builder()
                 .memName(name)
