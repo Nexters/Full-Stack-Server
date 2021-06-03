@@ -1,13 +1,14 @@
 package fullstack.labelary.domain;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
-@NoArgsConstructor
+@ToString(of = {"memIdx", "memName", "memEmail"})
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Member extends BaseTimeEntity {
 
@@ -27,6 +28,22 @@ public class Member extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role; // 스프링 시큐리티를 위한 권한 코드
+
+    @OneToMany(mappedBy = "member")
+    @ToString.Exclude
+    private List<Label> labels = new ArrayList<>();
+
+    public void setLabels(List<Label> labels) {
+        this.labels = labels;
+    }
+
+    @OneToMany(mappedBy = "member")
+    @ToString.Exclude
+    private List<Relation> relations = new ArrayList<>();
+
+    public void setRelations(List<Relation> relations) {
+        this.relations = relations;
+    }
 
     @Builder
     public Member(String memEmail, String memName, String picture, Role role) {
