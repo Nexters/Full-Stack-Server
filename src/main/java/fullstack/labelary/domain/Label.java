@@ -1,17 +1,15 @@
 package fullstack.labelary.domain;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
-@NoArgsConstructor
+@ToString(of = {"labelIdx", "labelTitle", "labelDetail"})
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Label extends BaseTimeEntity {
 
@@ -24,16 +22,37 @@ public class Label extends BaseTimeEntity {
     private String labelColor;      // 라벨 색
     private LocalDateTime searchDt; // 검색 시간
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mem_idx")
+    @ToString.Exclude
+    private Member member;
+
+    @OneToMany(mappedBy = "label")
+    @ToString.Exclude
+    private List<Relation> relations = new ArrayList<>();
+
+    public void setRelations(List<Relation> relations) {
+        this.relations = relations;
+    }
+
     @Builder
-    public Label(String labelTitle, String labelDetail, String labelColor) {
+    public Label(String labelTitle, String labelDetail, String labelColor, Member member) {
         this.labelTitle = labelTitle;
         this.labelDetail = labelDetail;
         this.labelColor = labelColor;
+        if (member != null) {
+            this.setMember(member);
+        }
     }
 
     public void update(String labelTitle, String labelDetail, String labelColor) {
         this.labelTitle = labelTitle;
         this.labelDetail = labelDetail;
         this.labelColor = labelColor;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+        member.getLabels().add(this);
     }
 }
