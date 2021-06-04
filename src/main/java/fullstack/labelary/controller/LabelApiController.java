@@ -46,8 +46,12 @@ public class LabelApiController {
      */
     @Operation(summary = "[R] 라벨 1개 조회 API")
     @GetMapping("/api/v1/label/{id}")
-    public LabelGetResponseDto getLabelForIdx(@PathVariable("id") Long id) {
-        return labelService.findById(id);
+    public ApiResponse<Object> getLabelForIdx(@PathVariable("id") Long id) {
+        try {
+            return ApiResponse.success(labelService.findById(id));
+        } catch (Exception e) {
+            return ApiResponse.error(ErrorCode.NOT_FOUND_LABEL_EXCEPTION);
+        }
     }
 
     /**
