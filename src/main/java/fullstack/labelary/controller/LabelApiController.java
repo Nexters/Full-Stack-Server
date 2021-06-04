@@ -1,17 +1,16 @@
 package fullstack.labelary.controller;
 
 import fullstack.labelary.domain.Label;
+import fullstack.labelary.dto.ApiResponse;
+import fullstack.labelary.dto.ErrorCode;
 import fullstack.labelary.dto.label.*;
 import fullstack.labelary.service.LabelService;
+import fullstack.labelary.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -32,11 +31,11 @@ public class LabelApiController {
      */
     @Operation(summary = "[C] 라벨 생성 API")
     @PostMapping("/api/v1/label")
-    public ResponseEntity<LabelSaveResponseDto> saveLabelsV2(@RequestBody @Valid LabelSaveRequestDto request) {
+    public ApiResponse<Object> saveLabelsV2(@RequestBody @Valid LabelSaveRequestDto request) {
         log.info("### Save Label Dto: {}", request);
         Long idx = labelService.saveLabel(request);
         LabelSaveResponseDto responseDto = new LabelSaveResponseDto(idx);
-        return ResponseEntity.ok(responseDto);
+        return ApiResponse.success(responseDto);
     }
 
     /**
