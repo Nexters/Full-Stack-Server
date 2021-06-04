@@ -22,6 +22,7 @@ import java.util.List;
 public class LabelApiController {
 
     private final LabelService labelService;
+    private final MemberService memberService;
 
     /**
      * 라벨 생성
@@ -59,7 +60,7 @@ public class LabelApiController {
      *
      * @param idx 라벨 idx
      * @param request 수정할 label 정보
-     * @return 라벨 idx
+     * @return 생성된 라벨 응답 dto
      */
     @Operation(summary = "[U] 라벨 수정 API")
     @PutMapping("/api/v1/label/{idx}")
