@@ -64,9 +64,20 @@ public class LabelApiController {
      */
     @Operation(summary = "[U] 라벨 수정 API")
     @PutMapping("/api/v1/label/{idx}")
-    public Long updateLabelV2(@PathVariable("idx") Long idx,
-                                                @RequestBody @Valid LabelUpdateRequestDto request){
-        return labelService.updateLabel(idx, request);
+    public ApiResponse<Object> updateLabelV2(@PathVariable("idx") Long idx,
+                              @RequestBody @Valid LabelUpdateRequestDto request){
+
+        if(!memberService.exist(request.getMemIdx())) {
+            // member idx 존재 하는지 검사
+            return ApiResponse.error(ErrorCode.NOT_FOUND_MEMBER_EXCEPTION);
+        } else if(!labelService.exist(idx)){
+            // Label idx 존재 하는지 검사
+            return ApiResponse.error(ErrorCode.NOT_FOUND_LABEL_EXCEPTION);
+        } else {
+            labelService.updateLabel(idx, request);
+            LabelGetResponseDto dto = labelService.findById(idx);
+            return ApiResponse.success(dto);
+        }
     }
 
     /**
@@ -88,14 +99,12 @@ public class LabelApiController {
      */
     @Operation(summary = "[D] 라벨 삭제 API")
     @DeleteMapping("api/v1/label/{idx}")
-    public Long deleteLabelV2(@PathVariable("idx") Long idx) {
-        labelService.deleteLabel(idx);
-        return idx;
-    }
-
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("setting")
-    public OAuth2User setting(@AuthenticationPrincipal OAuth2User user) {
-        return user;
+    public ApiResponse<Object> deleteLabelV2(@PathVariable("idx") Long idx) {
+        if (!labelService.exist(idx)) {
+            return ApiResponse.error(ErrorCode.NOT_FOUND_LABEL_EXCEPTION);
+        } else {
+            labelService.deleteLabel(idx);
+            return ApiResponse.success(idx);
+        }
     }
 }
