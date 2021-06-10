@@ -12,10 +12,11 @@ import javax.validation.constraints.NotEmpty;
 @Getter
 @NoArgsConstructor
 public class LabelUpdateRequestDto {
+
     @NotEmpty
+    private Long memIdx;
     private String labelTitle;
     private String labelDetail;
-    @NotEmpty
     private String labelColor;
 
     @Builder
