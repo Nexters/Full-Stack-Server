@@ -50,11 +50,10 @@ public class LabelService {
      * 라벨 제목, 설명, 색 업데이트
      */
     @Transactional
-    public Long updateLabel(Long labelIdx, LabelUpdateRequestDto request) {
+    public void updateLabel(Long labelIdx, LabelUpdateRequestDto request) {
         Label label = labelRepository.findById(labelIdx)
                 .orElseThrow(() -> new IllegalStateException("해당 라벨이 없습니다. id = " + labelIdx));
         label.update(request.getLabelTitle(), request.getLabelDetail(), request.getLabelColor());
-        return labelIdx;
     }
 
     /**
@@ -65,5 +64,15 @@ public class LabelService {
     public void deleteLabel(Long labelIdx) {
         labelRepository.deleteById(labelIdx);
     }
+
+    /**
+     * 라벨 존재 여부
+     * @param labelIdx 라벨 Idx
+     * @return 라벨 존재 여부
+     */
+    public boolean exist(Long labelIdx) {
+        return labelRepository.existsById(labelIdx);
+    }
+
 
 }
