@@ -6,12 +6,11 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-    show_sql: true # System.out 으로 출력
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
@@ -37,3 +36,6 @@ springdoc:
 logging.level:
   org.hibernate.SQL: debug # Log 남김
   org.hibernate.type: trace
+
+server:
+  port: 9012
