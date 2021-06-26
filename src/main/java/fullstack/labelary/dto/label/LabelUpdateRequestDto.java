@@ -15,6 +15,8 @@ public class LabelUpdateRequestDto {
 
     @NotEmpty
     private Long memIdx;
+    @NotEmpty
+    private Long labelIdx;
     private String labelTitle;
     private String labelDetail;
     private String labelColor;
