@@ -42,7 +42,7 @@
 //     * @return 일치하는 사진
 //     */
 //    public Picture findOne(Long pictureIdx) {
-//        return pictureRepository.findOne(pictureIdx);
+//        return pictureRepository.findById(pictureIdx).orElseThrow();
 //    }
 //
 //
@@ -52,7 +52,7 @@
 //     * @param pictureIdx 라벨 Idx
 //     */
 //    public void deletePicture(Long pictureIdx) {
-//        pictureRepository.delete(pictureIdx);
+//        pictureRepository.deleteById(pictureIdx);
 //    }
 //
 //
