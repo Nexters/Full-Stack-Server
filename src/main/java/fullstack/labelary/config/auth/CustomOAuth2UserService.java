@@ -5,6 +5,7 @@ import fullstack.labelary.config.auth.dto.SessionUser;
 import fullstack.labelary.domain.Member;
 import fullstack.labelary.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -18,13 +19,32 @@ import javax.servlet.http.HttpSession;
 import java.util.Collections;
 
 @RequiredArgsConstructor
+@Slf4j
 @Service
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
+
     private final MemberRepository memberRepository;
     private final HttpSession httpSession;
 
+    /**
+     * 1. 구글 로그인 버튼 클릭
+     * 2. 구글 로그인 화면 -> 로그인 완료
+     * 3. code 리턴 (OAuth-Client 라이브러리)
+     * 4. AccessToken 요청
+     * 5. UserRequest 정보 리턴
+     * 6. loadUser 함수 호출
+     * 7. {OAuth 프로바이더} 회원 프로필 리턴
+     * 8. @AuthenticationPrincipal 어노테이션 생성
+     *
+     * @param userRequest OAuth 프로바이더에서 내려준 정보
+     * @return OAuth User
+     * @throws OAuth2AuthenticationException
+     */
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        // OAuth 에서 처리한 데이터를 후처리하는 함수
+        // AccessToken 값 확인
+        log.debug(">>> OAuth2 AccessToken {}", userRequest.getAccessToken());
         OAuth2UserService delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
