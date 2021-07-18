@@ -23,7 +23,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/images/**",
                         "/js/**",
                         "/h2-console/**",
-                        "/login/**"
+                        "/login/**",
+                        "/swagger-ui/**",
+                        "/swagger-ui.html"
                 ).permitAll()
                 .antMatchers(
                         // "USER"인 경우만 접근 가능
