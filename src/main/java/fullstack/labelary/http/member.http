@@ -1,0 +1,26 @@
+###
+POST http://localhost:9012/api/vi/member/90001/posts
+Content-Type: application/json
+
+{
+  "id" : 1,
+  "name": "young-jun-park"
+}
+
+<> 2021-08-23T161749.404.json
+
+### 로그인 유저 테스트
+GET http://localhost:9012/
+
+### 구글 로그인 테스트
+GET http://localhost:9012/login/oauth2/code/google
+
+
+### 구글 로그인 페이지 연동
+GET http://localhost:9012/oauth2/authorization/google
+
+### 페이스북 로그인 페이지 연동
+GET http://localhost:9012/oauth2/authorization/facebook
+
+### 네이버 로그인 페이지 연동
+GET http://localhost:9012/oauth2/authorization/naver
